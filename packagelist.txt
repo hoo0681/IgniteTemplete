@@ -1,0 +1,40 @@
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: linux-64
+_libgcc_mutex=0.1=main
+_openmp_mutex=5.1=1_gnu
+blas=1.0=mkl
+ca-certificates=2022.07.19=h06a4308_0
+certifi=2022.9.24=py38h06a4308_0
+cudatoolkit=11.3.1=h2bc3f7f_2
+fire=0.4.0=pypi_0
+ignite=0.4.10=py_0
+intel-openmp=2022.1.0=h9e868ea_3769
+ld_impl_linux-64=2.38=h1181459_1
+libffi=3.3=he6710b0_2
+libgcc-ng=11.2.0=h1234567_1
+libgomp=11.2.0=h1234567_1
+libstdcxx-ng=11.2.0=h1234567_1
+mkl=2022.1.0=hc2b9512_224
+ncurses=6.3=h5eee18b_3
+openssl=1.1.1q=h7f8727e_0
+packaging=21.3=pypi_0
+pip=22.2.2=py38h06a4308_0
+pyparsing=3.0.9=pypi_0
+python=3.8.13=h12debd9_0
+pytorch=1.12.1=py3.8_cuda11.3_cudnn8.3.2_0
+pytorch-ignite=0.4.10=pypi_0
+pytorch-mutex=1.0=cuda
+readline=8.1.2=h7f8727e_1
+setuptools=63.4.1=py38h06a4308_0
+six=1.16.0=pypi_0
+sqlite=3.39.3=h5082296_0
+termcolor=2.0.1=pypi_0
+tk=8.6.12=h1ccaba5_0
+torch=1.12.1=pypi_0
+typing-extensions=4.4.0=pypi_0
+typing_extensions=4.3.0=py38h06a4308_0
+wheel=0.37.1=pyhd3eb1b0_0
+xz=5.2.6=h5eee18b_0
+yaml=0.2.5=h7b6447c_0
+zlib=1.2.12=h5eee18b_3

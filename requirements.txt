@@ -1,0 +1,9 @@
+certifi @ file:///croot/certifi_1665076670883/work/certifi
+fire==0.4.0
+packaging==21.3
+pyparsing==3.0.9
+pytorch-ignite==0.4.10
+six==1.16.0
+termcolor==2.0.1
+torch==1.12.1
+typing_extensions==4.4.0
