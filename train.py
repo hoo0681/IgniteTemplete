@@ -3,7 +3,8 @@ from ignite.utils import manual_seed
 from DAlogger import setup_logger,setup_rank_zero
 from data import get_dataflow
 from model import get_model
-from optim import get_optimizer, get_lr_scheduler
+from optim import get_optimizer
+from lr_scheduler import get_lr_scheduler
 from losses import get_criterion
 from utils import log_basic_info, log_metrics, get_save_handler,create_trainer,create_evaluator
 from ignite.metrics import Accuracy, Loss
@@ -19,7 +20,6 @@ def training(local_rank, config):
     {
         "seed": <seed>,
         "output_path": <output_path>,
-        "num_iters_per_epoch": <num_iters_per_epoch>,
         "num_epochs": <num_epochs>,
         "validate_every": <validate_every>,
         "with_amp": <with_amp>,Bool
@@ -71,7 +71,7 @@ def training(local_rank, config):
     optimizer = get_optimizer(config, model)
     criterion = get_criterion(config['loss'])
     config["num_iters_per_epoch"] = len(train_loader)
-    lr_scheduler = get_lr_scheduler(config, optimizer)
+    lr_scheduler = get_lr_scheduler(config, optimizer) if config['lr_scheduler'] is not None else None
 
     trainer = create_trainer(
         model, optimizer, criterion, lr_scheduler, train_loader.sampler, config, logger
