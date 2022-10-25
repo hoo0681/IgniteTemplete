@@ -1,5 +1,6 @@
 from importlib import import_module
 import torch
+import ignite.distributed as idist
 def get_dataflow(dataset_config,test_only=False):
     """
     Get dataflow for training and validation.
@@ -16,13 +17,13 @@ def get_dataflow(dataset_config,test_only=False):
     if ~test_only:            
         train_dataset = import_module("data." + dataset_config["name"])
         train_dataset = getattr(train_dataset, dataset_config["name"].lower())
-        train_dataset = train_dataset(dataset_config['train_args'], train=True)
+        train_dataset = train_dataset(dataset_config['train_args'])
 
         val_dataset = import_module("data." + dataset_config["name"])
         val_dataset = getattr(val_dataset, dataset_config["name"].lower())
-        val_dataset = val_dataset(dataset_config['val_args'], train=False)
+        val_dataset = val_dataset(dataset_config['val_args'])
 
-        train_loader = torch.utils.data.DataLoader(
+        train_loader = idist.auto_dataloader(
             train_dataset,
             batch_size=dataset_config["batch_size"],
             shuffle=True,
@@ -30,7 +31,7 @@ def get_dataflow(dataset_config,test_only=False):
             pin_memory=True,
         )
 
-        val_loader = torch.utils.data.DataLoader(
+        val_loader = idist.auto_dataloader(
             val_dataset,
             batch_size=dataset_config["batch_size"],
             shuffle=False,
@@ -41,9 +42,9 @@ def get_dataflow(dataset_config,test_only=False):
     else:
         test_dataset = import_module("data." + dataset_config["name"])
         test_dataset = getattr(test_dataset, dataset_config["name"].lower())
-        test_dataset = test_dataset(dataset_config['test_args'], train=False)
+        test_dataset = test_dataset(dataset_config['test_args'])
 
-        test_loader = torch.utils.data.DataLoader(
+        test_loader = idist.auto_dataloader(
             test_dataset,
             batch_size=dataset_config["batch_size"],
             shuffle=False,

@@ -1,0 +1,45 @@
+seed: 1234
+output_path: ../experiment
+num_epochs: 100
+validate_every: 1
+with_amp: False
+checkpoint_every: 5
+resume_from: None
+log_every_iters: 10
+with_clearml: False
+dataset: 
+  name: mnist
+  train_args:
+    root: "../tmp"
+    download: True
+    train: True
+  val_args:
+    root: "../tmp"
+    download: True
+    train: False    
+  batch_size: 64
+  num_workers: 8
+model: 
+  name: "testmodel"
+optimizer: 
+  name: 'SGD'
+  args: 
+    lr: 0.4
+    momentum: 0.9
+    weight_decay: 1e-4
+    nesterov: True
+lr_scheduler: 
+  name: "testlrsc"
+  args: 
+    param_name: "lr"
+    num_warmup_epochs: 1
+    milestones_cmd: "[(0, 0.0),
+    (config['num_iters_per_epoch'] * config['lr_scheduler']['args']['num_warmup_epochs'], config['optimizer']['args']['lr']),
+    (config['num_iters_per_epoch'] * config['num_epochs'], 0.0)]"
+loss: 
+  name: "CrossEntropyLoss"
+logger: 
+  name: 'Test'
+
+
+

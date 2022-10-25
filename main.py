@@ -3,7 +3,7 @@ import ignite.distributed as idist
 
 from train import training
 import yaml
-def run(backend=None ,config_path='./config',**spawn_kwargs):
+def run(backend=None ,config_path='./config.yaml',**spawn_kwargs):
     with open(config_path, 'r') as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
     # Parse config

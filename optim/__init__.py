@@ -15,25 +15,16 @@ def get_optimizer(config,model):
         ...
     }
     """
-    optimizer = importlib.import_module("torch.optim." + config["optimizer"]["name"])
-    optimizer = getattr(optimizer, config["optimizer"]["name"])
+    # search optimizer in folder first
+    if hasattr(torch.optim, config["optimizer"]["name"]):
+        optimizer = importlib.import_module("torch.optim." + config["optimizer"]["name"])
+        print('using torch.optim')
+    else:
+        optimizer = importlib.import_module("optim." + config["optimizer"]["name"])
+        optimizer = getattr(optimizer, config["optimizer"]["name"])
+        print('using custom optim')
+        
     optimizer = optimizer(model.parameters(), **config["optimizer"]["args"])
     optimizer = idist.auto_optim(optimizer)
     return optimizer
-def get_lr_scheduler(config, optimizer):
-    """
-    Get lr scheduler for training.
-    expected config:
-    {
-        ...
-        "lr_scheduler": {
-            "name": "<LRSchedulerName>",
-            "args": <arg>, #lr_scheduler args {optional}
-        }
-        ...
-    }
-    """
-    lr_scheduler = importlib.import_module("torch.optim.lr_scheduler." + config["lr_scheduler"]["name"])
-    lr_scheduler = getattr(lr_scheduler, config["lr_scheduler"]["name"])
-    lr_scheduler = lr_scheduler(optimizer, **config["lr_scheduler"]["args"])
-    return lr_scheduler
+
